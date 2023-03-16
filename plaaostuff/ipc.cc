@@ -54,10 +54,11 @@ void read_loop(Canvas *canvas)
       for (int i=0; i<len; i++) {
         text[i] = buf[i];
       }
+
       text[len] = '\0';
 
       rgb_matrix::DrawText(canvas, font, 0, font.baseline(),
-                         color, &bg_color, buf, 0);
+                         color, &bg_color, text, 0);
     }
 
 		close(fd);
