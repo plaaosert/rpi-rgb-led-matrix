@@ -13,6 +13,11 @@
 #include <stdio.h>
 #include <signal.h>
 
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <pthread.h>
+
 using namespace rgb_matrix;
 
 using rgb_matrix::RGBMatrix;
@@ -31,7 +36,7 @@ void read_loop(Canvas *canvas)
 
   rgb_matrix::Font font;
   if (!font.LoadFont("/home/pi/fonts/4x6.bdf")) {
-    fprintf(stderr, "Couldn't load font '%s'\n", bdf_font_file);
+    fprintf(stderr, "Couldn't load font '%s'\n", "/home/pi/fonts/4x6.bdf");
     return;
   }
 
