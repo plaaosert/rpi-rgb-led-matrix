@@ -66,8 +66,40 @@ void read_loop(Canvas *canvas)
         break;
       }
 
-      rgb_matrix::DrawText(canvas, font, 0, font.baseline(),
-                         color, &bg_color, text, 0);
+      std::string text_s(text);
+      std::string delimiter = "|";
+      std::string subdelimiter = ",";
+      bool consumed_token = true;
+      while (consumed_token) {
+        if (s.find(delimiter) == string::npos) {
+          break;
+        }
+
+        std::string token = s.substr(0, s.find(delimiter));
+
+        int values[5];
+        bool worked = false;
+        for (int i=0; i<5; i++) {
+          if (token.find(subdelimiter) == string::npos) {
+            break;
+          }
+
+          std::string subtoken = token.substr(0, token.find(subdelimiter));
+
+          int v = stoi(subtoken);
+          values[i] = v;
+
+          token.erase(0, token.find(subdelimiter) + subdelimiter.length());
+          worked = true;
+        }
+
+        if (worked) {
+          canvas->SetPixel(values[0], values[1], values[2], values[3], values[4]);
+
+          s.erase(0, s.find(delimiter) + delimiter.length());
+          consumed_token = true;
+        }
+      }
     }
 
 		close(fd);
