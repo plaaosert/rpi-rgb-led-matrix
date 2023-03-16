@@ -90,7 +90,7 @@ void read_loop(Canvas *canvas)
           int v;
           try {
             v = stoi(subtoken);
-          } catch {
+          } catch (std::exception &err) {
             worked = false;
             break;
           }
