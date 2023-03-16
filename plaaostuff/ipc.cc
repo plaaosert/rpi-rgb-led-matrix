@@ -8,6 +8,7 @@
 #include "led-matrix.h"
 #include "graphics.h"
 
+#include <string.h>
 #include <unistd.h>
 #include <math.h>
 #include <stdio.h>
