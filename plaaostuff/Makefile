@@ -14,6 +14,9 @@ LDFLAGS+=-L$(RGB_LIBDIR) -l$(RGB_LIBRARY_NAME) -lrt -lm -lpthread
 
 all : $(BINARIES)
 
+$(RGB_LIBRARY): FORCE
+	$(MAKE) -C $(RGB_LIBDIR)
+
 ipc : ipc.o
 
 # All the binaries that have the same name as the object file.q
