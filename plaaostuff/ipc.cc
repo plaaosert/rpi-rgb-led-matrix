@@ -52,6 +52,7 @@ void read_loop(Canvas *canvas)
       }
 
       char text[len+1];
+      printf("len %u str %s\n", len, buf);
       for (size_t i=0; i<len; i++) {
         text[i] = buf[i];
       }
