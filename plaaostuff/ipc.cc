@@ -94,9 +94,9 @@ void read_loop(Canvas *canvas)
         }
 
         bool worked = true;
+        bool filling = false;
+        int values[5];        
         if (need_to_parse) {
-          int values[5];
-          bool filling = false;
           for (int i=0; i<5; i++) {
             std::string subtoken = token.substr(0, token.find(subdelimiter));
 
