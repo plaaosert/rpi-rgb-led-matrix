@@ -45,10 +45,10 @@ void read_loop(Canvas *canvas)
 	size_t len;
 	char buf[PIPE_BUF];
   printf("entered read_loop\n");
-  
+
 	while (1) {
 		fd = open("/home/pi/scrimblopipe", O_RDONLY);
-		while ((len = read(fd, buf, PIPE_BUF)) > 0) {
+		while ((len = read(fd, buf, 4)) > 0) {
       if (strcmp(buf, "EXIT")) {
         break;
       }
