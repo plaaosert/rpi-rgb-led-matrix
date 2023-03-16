@@ -87,7 +87,13 @@ void read_loop(Canvas *canvas)
           std::string subtoken = token.substr(0, token.find(subdelimiter));
 
           printf("token;    %s\nsubtoken; %s\n", token.c_str(), subtoken.c_str());
-          int v = stoi(subtoken);
+          int v;
+          try {
+            v = stoi(subtoken);
+          } catch {
+            worked = false;
+            break;
+          }
           values[i] = v;
 
           if (token.find(subdelimiter) == std::string::npos) {
@@ -110,6 +116,8 @@ void read_loop(Canvas *canvas)
           consumed_token = true;
 
           printf("remaining (%d): %s\n", s.length(), s.c_str());
+        } else {
+          break;
         }
       }
     }
