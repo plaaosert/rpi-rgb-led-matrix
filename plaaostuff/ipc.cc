@@ -27,6 +27,11 @@ using rgb_matrix::Canvas;
 volatile bool interrupt_received = false;
 static void InterruptHandler(int signo) {
   interrupt_received = true;
+
+  canvas->Clear();
+  delete canvas;
+
+  exit();
 }
 
 void read_loop(Canvas *canvas)
