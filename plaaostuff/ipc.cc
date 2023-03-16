@@ -73,24 +73,38 @@ void read_loop(Canvas *canvas)
       bool consumed_token = true;
       while (consumed_token) {
         consumed_token = false;
-        std::string token = s.substr(0, s.find(delimiter));
+        if (s.find(delimiter) == std::string::npos) {
+          std::string token = s.copy();
+        }
+        else {
+          std::string token = s.substr(0, s.find(delimiter));
+        }
 
         int values[5];
-        bool worked = false;
+        bool worked = true;
         for (int i=0; i<5; i++) {
           std::string subtoken = token.substr(0, token.find(subdelimiter));
 
           int v = stoi(subtoken);
           values[i] = v;
 
-          token.erase(0, token.find(subdelimiter) + subdelimiter.length());
-          worked = true;
+          if (token.find(subdelimiter) == std::string::npos) {
+            break;
+          }
+          else {
+            token.erase(0, token.find(subdelimiter) + subdelimiter.length());
+          }
         }
 
         if (worked) {
           canvas->SetPixel(values[0], values[1], values[2], values[3], values[4]);
 
-          s.erase(0, s.find(delimiter) + delimiter.length());
+          if (s.find(delimiter) == std::string::npos) {
+            break;
+          }
+          else {
+            s.erase(0, s.find(delimiter) + delimiter.length());
+          }
           consumed_token = true;
 
           printf("remaining (%d): %s", s.length(), s.c_str());
