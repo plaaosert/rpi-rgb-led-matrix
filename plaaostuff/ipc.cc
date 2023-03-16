@@ -91,6 +91,7 @@ void read_loop(Canvas *canvas)
           s.erase(0, s.find(delimiter) + delimiter.length());
           consumed_token = true;
 
+          printf("remaining (%d): %s", s.length(), s);
           if (s.length() <= 0) {
             break;
           }
