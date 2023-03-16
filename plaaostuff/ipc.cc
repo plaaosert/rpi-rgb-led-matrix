@@ -68,7 +68,7 @@ void read_loop(Canvas *canvas)
       std::string delimiter = "|";
       std::string subdelimiter = ",";
 
-      printf("str: %s", s.c_str());
+      printf("str: %s\n", s.c_str());
 
       bool consumed_token = true;
       while (consumed_token) {
@@ -109,7 +109,7 @@ void read_loop(Canvas *canvas)
           }
           consumed_token = true;
 
-          printf("remaining (%d): %s", s.length(), s.c_str());
+          printf("remaining (%d): %s\n", s.length(), s.c_str());
         }
       }
     }
