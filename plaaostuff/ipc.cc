@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <signal.h>
 
+using namespace rgb_matrix;
+
 using rgb_matrix::RGBMatrix;
 using rgb_matrix::Canvas;
 
