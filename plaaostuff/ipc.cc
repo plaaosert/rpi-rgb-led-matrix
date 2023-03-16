@@ -86,6 +86,7 @@ void read_loop(Canvas *canvas)
         for (int i=0; i<5; i++) {
           std::string subtoken = token.substr(0, token.find(subdelimiter));
 
+          printf("subtoken; %s", subtoken.c_str());
           int v = stoi(subtoken);
           values[i] = v;
 
