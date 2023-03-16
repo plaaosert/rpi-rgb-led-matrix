@@ -99,7 +99,7 @@ void read_loop(Canvas *canvas)
           //printf("token;    %s\nsubtoken; %s\n", token.c_str(), subtoken.c_str());
           int v;
           try {
-            if (strcmp(subtoken, "FILL") == 0) {
+            if (strcmp(subtoken.c_str(), "FILL") == 0) {
               filling = true;
             } else {
               v = stoi(subtoken);
