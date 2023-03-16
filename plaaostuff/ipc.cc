@@ -22,7 +22,7 @@ static void InterruptHandler(int signo) {
 
 void read_loop(Canvas *canvas)
 {
-  canvas->Fill(flood_color.r, flood_color.g, flood_color.b);
+  canvas->Fill(0, 0, 0);
   Color color(255, 255, 0);
   Color bg_color(0, 0, 0);
 
