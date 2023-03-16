@@ -53,7 +53,7 @@ void read_loop(Canvas *canvas)
 		fd = open("/home/pi/scrimblopipe", O_RDONLY);
     printf("fd: %d\n", fd);
 
-		while ((len = read(fd, buf, PIPE_BUF)) > 0 && !interrupt_received) {
+		while ((len = read(fd, buf, PIPE_BUF)) > 0 && !interrupt_received && running) {
       for (size_t i=0; i<len; i++) {
         text[i] = buf[i];
       }
@@ -81,15 +81,29 @@ void read_loop(Canvas *canvas)
           token = s.substr(0, s.find(delimiter));
         }
 
+        if (strcmp(token.c_str(), "EXIT") == 0) {
+          running = 0;
+          break;
+        }
+
+        if (strcmp(token.c_str(), "CLEAR") == 0) {
+          canvas->Clear();
+        }
+
         int values[5];
         bool worked = true;
+        bool filling = false;
         for (int i=0; i<5; i++) {
           std::string subtoken = token.substr(0, token.find(subdelimiter));
 
           //printf("token;    %s\nsubtoken; %s\n", token.c_str(), subtoken.c_str());
           int v;
           try {
-            v = stoi(subtoken);
+            if (strcmp(subtoken, "FILL") == 0) {
+              filling = true;
+            } else {
+              v = stoi(subtoken);
+            }
           } catch (std::exception &err) {
             worked = false;
             break;
@@ -105,7 +119,11 @@ void read_loop(Canvas *canvas)
         }
 
         if (worked) {
-          canvas->SetPixel(values[0], values[1], values[2], values[3], values[4]);
+          if (filling) {
+            canvas->Fill(values[2], values[3], values[4]);
+          } else {
+            canvas->SetPixel(values[0], values[1], values[2], values[3], values[4]);
+          }
 
           if (s.find(delimiter) == std::string::npos) {
             break;
