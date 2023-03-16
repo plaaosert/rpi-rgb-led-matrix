@@ -52,16 +52,16 @@ void read_loop(Canvas *canvas)
     printf("fd: %d\n", fd);
 
 		while ((len = read(fd, buf, PIPE_BUF)) > 0) {
-      if (strcmp(buf, "EXIT") == 0) {
-        break;
-      }
-
       for (size_t i=0; i<len; i++) {
         text[i] = buf[i];
       }
       text[len] = '\0';
 
       printf("len %u\nBUF: %s\nTXT: %s\n", len, buf, text);
+
+      if (strcmp(text, "EXIT") == 0) {
+        break;
+      }
 
       rgb_matrix::DrawText(canvas, font, 0, font.baseline(),
                          color, &bg_color, text, 0);
