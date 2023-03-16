@@ -31,7 +31,7 @@ static void InterruptHandler(int signo) {
   canvas->Clear();
   delete canvas;
 
-  exit();
+  exit(1);
 }
 
 void read_loop(Canvas *canvas)
