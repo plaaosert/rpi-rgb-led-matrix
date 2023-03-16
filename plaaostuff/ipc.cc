@@ -59,8 +59,6 @@ void read_loop(Canvas *canvas)
       }
       text[len] = '\0';
 
-      printf("len %u\nBUF: %s\nTXT: %s\n", len, buf, text);
-
       if (strcmp(text, "EXIT") == 0) {
         running = 0;
         break;
@@ -69,6 +67,9 @@ void read_loop(Canvas *canvas)
       std::string s(text);
       std::string delimiter = "|";
       std::string subdelimiter = ",";
+
+      printf("str: %s", s);
+
       bool consumed_token = true;
       while (consumed_token) {
         consumed_token = false;
