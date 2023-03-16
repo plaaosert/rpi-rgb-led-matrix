@@ -93,9 +93,9 @@ void read_loop(Canvas *canvas)
           need_to_parse = false;
         }
 
+        bool worked = true;
         if (need_to_parse) {
           int values[5];
-          bool worked = true;
           bool filling = false;
           for (int i=0; i<5; i++) {
             std::string subtoken = token.substr(0, token.find(subdelimiter));
@@ -121,26 +121,28 @@ void read_loop(Canvas *canvas)
               token.erase(0, token.find(subdelimiter) + subdelimiter.length());
             }
           }
+        }
 
-          if (worked) {
+        if (worked) {
+          if (need_to_parse) {
             if (filling) {
               canvas->Fill(values[2], values[3], values[4]);
             } else {
               canvas->SetPixel(values[0], values[1], values[2], values[3], values[4]);
             }
+          }
 
-            if (s.find(delimiter) == std::string::npos) {
-              break;
-            }
-            else {
-              s.erase(0, s.find(delimiter) + delimiter.length());
-            }
-            consumed_token = true;
-
-            //printf("remaining (%d): %s\n", s.length(), s.c_str());
-          } else {
+          if (s.find(delimiter) == std::string::npos) {
             break;
           }
+          else {
+            s.erase(0, s.find(delimiter) + delimiter.length());
+          }
+          consumed_token = true;
+
+          //printf("remaining (%d): %s\n", s.length(), s.c_str());
+        } else {
+          break;
         }
       }
     }
