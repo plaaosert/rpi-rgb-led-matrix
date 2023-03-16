@@ -97,7 +97,7 @@ void read_loop(Canvas *canvas)
           std::string subtoken = token.substr(0, token.find(subdelimiter));
 
           //printf("token;    %s\nsubtoken; %s\n", token.c_str(), subtoken.c_str());
-          int v;
+          int v = 0;
           try {
             if (strcmp(subtoken.c_str(), "FILL") == 0) {
               filling = true;
