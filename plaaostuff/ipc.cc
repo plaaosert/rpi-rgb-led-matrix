@@ -47,11 +47,13 @@ void read_loop(Canvas *canvas)
   char text[PIPE_BUF];
   printf("entered read_loop\n");
   
-	while (1) {
+  int running = 1;
+
+	while (running && !interrupt_received) {
 		fd = open("/home/pi/scrimblopipe", O_RDONLY);
     printf("fd: %d\n", fd);
 
-		while ((len = read(fd, buf, PIPE_BUF)) > 0) {
+		while ((len = read(fd, buf, PIPE_BUF)) > 0 && !interrupt_received) {
       for (size_t i=0; i<len; i++) {
         text[i] = buf[i];
       }
@@ -60,6 +62,7 @@ void read_loop(Canvas *canvas)
       printf("len %u\nBUF: %s\nTXT: %s\n", len, buf, text);
 
       if (strcmp(text, "EXIT") == 0) {
+        running = 0;
         break;
       }
 
