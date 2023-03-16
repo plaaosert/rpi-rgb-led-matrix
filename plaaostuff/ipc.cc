@@ -71,19 +71,11 @@ void read_loop(Canvas *canvas)
       std::string subdelimiter = ",";
       bool consumed_token = true;
       while (consumed_token) {
-        if (s.find(delimiter) == std::string::npos) {
-          break;
-        }
-
         std::string token = s.substr(0, s.find(delimiter));
 
         int values[5];
         bool worked = false;
         for (int i=0; i<5; i++) {
-          if (token.find(subdelimiter) == std::string::npos) {
-            break;
-          }
-
           std::string subtoken = token.substr(0, token.find(subdelimiter));
 
           int v = stoi(subtoken);
@@ -98,6 +90,10 @@ void read_loop(Canvas *canvas)
 
           s.erase(0, s.find(delimiter) + delimiter.length());
           consumed_token = true;
+
+          if (s.length <= 0) {
+            break;
+          }
         }
       }
     }
