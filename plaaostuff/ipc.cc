@@ -52,7 +52,7 @@ void read_loop(Canvas *canvas)
       }
 
       char text[len+1];
-      for (int i=0; i<len; i++) {
+      for (size_t i=0; i<len; i++) {
         text[i] = buf[i];
       }
 
