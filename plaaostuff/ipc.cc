@@ -75,10 +75,10 @@ void read_loop(Canvas *canvas)
         consumed_token = false;
         std::string token;
         if (s.find(delimiter) == std::string::npos) {
-          std::string token = s;
+          token = s;
         }
         else {
-          std::string token = s.substr(0, s.find(delimiter));
+          token = s.substr(0, s.find(delimiter));
         }
 
         int values[5];
