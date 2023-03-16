@@ -73,6 +73,8 @@ void read_loop(Canvas *canvas)
       bool consumed_token = true;
       while (consumed_token) {
         consumed_token = false;
+        bool need_to_parse = true;
+
         std::string token;
         if (s.find(delimiter) == std::string::npos) {
           token = s;
@@ -88,54 +90,57 @@ void read_loop(Canvas *canvas)
 
         if (strcmp(token.c_str(), "CLEAR") == 0) {
           canvas->Clear();
+          need_to_parse = false;
         }
 
-        int values[5];
-        bool worked = true;
-        bool filling = false;
-        for (int i=0; i<5; i++) {
-          std::string subtoken = token.substr(0, token.find(subdelimiter));
+        if (need_to_parse) {
+          int values[5];
+          bool worked = true;
+          bool filling = false;
+          for (int i=0; i<5; i++) {
+            std::string subtoken = token.substr(0, token.find(subdelimiter));
 
-          //printf("token;    %s\nsubtoken; %s\n", token.c_str(), subtoken.c_str());
-          int v = 0;
-          try {
-            if (strcmp(subtoken.c_str(), "FILL") == 0) {
-              filling = true;
-            } else {
-              v = stoi(subtoken);
+            //printf("token;    %s\nsubtoken; %s\n", token.c_str(), subtoken.c_str());
+            int v = 0;
+            try {
+              if (strcmp(subtoken.c_str(), "FILL") == 0) {
+                filling = true;
+              } else {
+                v = stoi(subtoken);
+              }
+            } catch (std::exception &err) {
+              worked = false;
+              break;
             }
-          } catch (std::exception &err) {
-            worked = false;
-            break;
-          }
-          values[i] = v;
+            values[i] = v;
 
-          if (token.find(subdelimiter) == std::string::npos) {
-            break;
+            if (token.find(subdelimiter) == std::string::npos) {
+              break;
+            }
+            else {
+              token.erase(0, token.find(subdelimiter) + subdelimiter.length());
+            }
           }
-          else {
-            token.erase(0, token.find(subdelimiter) + subdelimiter.length());
-          }
-        }
 
-        if (worked) {
-          if (filling) {
-            canvas->Fill(values[2], values[3], values[4]);
+          if (worked) {
+            if (filling) {
+              canvas->Fill(values[2], values[3], values[4]);
+            } else {
+              canvas->SetPixel(values[0], values[1], values[2], values[3], values[4]);
+            }
+
+            if (s.find(delimiter) == std::string::npos) {
+              break;
+            }
+            else {
+              s.erase(0, s.find(delimiter) + delimiter.length());
+            }
+            consumed_token = true;
+
+            //printf("remaining (%d): %s\n", s.length(), s.c_str());
           } else {
-            canvas->SetPixel(values[0], values[1], values[2], values[3], values[4]);
-          }
-
-          if (s.find(delimiter) == std::string::npos) {
             break;
           }
-          else {
-            s.erase(0, s.find(delimiter) + delimiter.length());
-          }
-          consumed_token = true;
-
-          //printf("remaining (%d): %s\n", s.length(), s.c_str());
-        } else {
-          break;
         }
       }
     }
