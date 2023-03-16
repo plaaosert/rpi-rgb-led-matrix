@@ -91,7 +91,7 @@ void read_loop(Canvas *canvas)
           s.erase(0, s.find(delimiter) + delimiter.length());
           consumed_token = true;
 
-          if (s.length <= 0) {
+          if (s.length() <= 0) {
             break;
           }
         }
