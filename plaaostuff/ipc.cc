@@ -51,7 +51,7 @@ void read_loop(Canvas *canvas)
     printf("fd: %d\n", fd);
 
 		while ((len = read(fd, buf, PIPE_BUF)) > 0) {
-      if (strcmp(buf, "EXIT")) {
+      if (strcmp(buf, "EXIT") == 0) {
         break;
       }
 
