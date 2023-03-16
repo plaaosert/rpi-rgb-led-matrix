@@ -44,6 +44,8 @@ void read_loop(Canvas *canvas)
 	int fd;
 	size_t len;
 	char buf[PIPE_BUF];
+  printf("entered read_loop\n");
+  
 	while (1) {
 		fd = open("/home/pi/scrimblopipe", O_RDONLY);
 		while ((len = read(fd, buf, PIPE_BUF)) > 0) {
@@ -92,10 +94,11 @@ static void DrawOnCanvas(Canvas *canvas) {
 int main(int argc, char *argv[]) {
   RGBMatrix::Options defaults;
   defaults.hardware_mapping = "regular";  // or e.g. "adafruit-hat"
-  defaults.rows = 32;
+  defaults.rows = 64;
+  defaults.cols = 64;
   defaults.chain_length = 1;
   defaults.parallel = 1;
-  defaults.show_refresh_rate = true;
+  defaults.show_refresh_rate = false;
   Canvas *canvas = RGBMatrix::CreateFromFlags(&argc, &argv, &defaults);
   if (canvas == NULL)
     return 1;
