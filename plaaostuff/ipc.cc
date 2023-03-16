@@ -44,6 +44,7 @@ void read_loop(Canvas *canvas)
 	int fd;
 	size_t len;
 	char buf[PIPE_BUF];
+  char text[PIPE_BUF];
   printf("entered read_loop\n");
   
 	while (1) {
@@ -55,11 +56,11 @@ void read_loop(Canvas *canvas)
         break;
       }
 
-      char text[len];
-
       for (size_t i=0; i<len; i++) {
         text[i] = buf[i];
       }
+      text[len] = '\0';
+
       printf("len %u\nBUF: %s\nTXT: %s\n", len, buf, text);
 
       rgb_matrix::DrawText(canvas, font, 0, font.baseline(),
