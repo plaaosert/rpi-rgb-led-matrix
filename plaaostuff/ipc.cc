@@ -46,6 +46,16 @@ void read_loop(Canvas *canvas)
 	while (1) {
 		fd = open("/home/pi/scrimblopipe", O_RDONLY);
 		while ((len = read(fd, buf, PIPE_BUF)) > 0) {
+      if (strcmp(buf, "EXIT")) {
+        break;
+      }
+
+      char text[len+1];
+      for (int i=0; i<len; i++) {
+        text[i] = buf[i];
+      }
+      text[len] = '\0';
+
       rgb_matrix::DrawText(canvas, font, 0, font.baseline(),
                          color, &bg_color, buf, 0);
     }
