@@ -56,10 +56,11 @@ void read_loop(Canvas *canvas)
       }
 
       char text[len];
-      printf("len %u str %s\n", len, buf);
+
       for (size_t i=0; i<len; i++) {
         text[i] = buf[i];
       }
+      printf("len %u\nBUF: %s\nTXT: %s\n", len, buf, text);
 
       rgb_matrix::DrawText(canvas, font, 0, font.baseline(),
                          color, &bg_color, text, 0);
