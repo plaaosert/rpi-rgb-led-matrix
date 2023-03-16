@@ -28,9 +28,6 @@ volatile bool interrupt_received = false;
 static void InterruptHandler(int signo) {
   interrupt_received = true;
 
-  canvas->Clear();
-  delete canvas;
-
   exit(1);
 }
 
