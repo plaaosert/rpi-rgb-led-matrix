@@ -74,7 +74,7 @@ void read_loop(Canvas *canvas)
       while (consumed_token) {
         consumed_token = false;
         if (s.find(delimiter) == std::string::npos) {
-          std::string token = s.copy();
+          std::string token = s;
         }
         else {
           std::string token = s.substr(0, s.find(delimiter));
