@@ -297,8 +297,8 @@ speed = Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized
 
 w, h = im.size
 col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
-bounds_x = (0, 54)
-bounds_y = (0, 56)
+bounds_x = (0, 32)
+bounds_y = (0, 32)
 
 while True:
     pos += speed
