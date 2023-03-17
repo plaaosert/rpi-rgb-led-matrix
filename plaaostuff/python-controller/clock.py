@@ -298,17 +298,17 @@ speed = Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized
 
 w, h = im.size
 col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
-bounds_x = (0, 53)
+bounds_x = (0, 54)
 bounds_y = (0, 55)
 
 while True:
     pos += speed
-    if not (bounds_x[0] < pos.x < bounds_x[1]):
+    if not (bounds_x[0] <= pos.x < bounds_x[1]):
         speed *= Vector2(-1, 1)
         pos.x = max(bounds_x[0], min(bounds_x[1], pos.x))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
-    if not (bounds_y[0] < pos.y < bounds_y[1]):
+    if not (bounds_y[0] <= pos.y < bounds_y[1]):
         speed *= Vector2(1, -1)
         pos.y = max(bounds_y[0], min(bounds_y[1], pos.y))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
