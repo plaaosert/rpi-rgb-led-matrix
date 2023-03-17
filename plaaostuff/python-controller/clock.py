@@ -248,6 +248,8 @@ class Canvas:
                     )
                     self.current_canvas[change.pos.x][change.pos.y] = last_fill_col
 
+        self.previous_changes = self.changes
+        self.changes = {}
         return changes_string
 
     def set_fill(self, fill_type: "Canvas.FILLTYPE", fill_col: Colour = Colour.black):
