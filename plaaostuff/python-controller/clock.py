@@ -317,7 +317,7 @@ while True:
     ticks += 1
     if ticks % timeout == timeout - 1:
         ticks = 0
-        timeout = max(8, int(timeout / 1.25))
+        timeout = max(8, int(timeout / 1.05))
 
         positions.append(Vector2(10, 10))
         speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 200))
