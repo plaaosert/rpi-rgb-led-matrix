@@ -1,5 +1,6 @@
 import math
 import os
+import textwrap
 from enum import Enum
 from typing import Tuple, List, Dict
 
@@ -345,10 +346,23 @@ while True:
                     canvas.set_pixel(pixelpos, cols[index])
 
     st = canvas.update_changes(clear_last=True)
+    sts = []
+
+    if len(st) > 4096:
+        buffer = ""
+        for part in st.split("|"):
+            if len(buffer + part + "|") > 4096:
+                sts.append(buffer)
+                buffer = part + "|"
+            else:
+                buffer += part + "|"
+    else:
+        sts = [st]
 
     if print_canvas:
         print("\033[1;1H" + str(canvas))
 
     if pipe:
-        pipe.write(st)
-        pipe.flush()
+        for st in sts:
+            pipe.write(st)
+            pipe.flush()
