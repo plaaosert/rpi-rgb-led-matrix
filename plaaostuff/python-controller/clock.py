@@ -305,7 +305,7 @@ bounds_x = (0, 54)
 bounds_y = (0, 53)
 
 ticks = 0
-timeout = 256
+timeout = 32
 
 frame_time = time.time()
 while True:
