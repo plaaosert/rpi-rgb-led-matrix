@@ -284,16 +284,16 @@ pipe = None
 if "--no-pipe" not in sys.argv:
     pipe = open("/home/pi/scrimblopipe", "w")
 
+if pipe:
+    pipe.write("CLEAR")
+    pipe.flush()
+
 print_canvas = "--print-canvas" in sys.argv
 
 canvas = Canvas(Vector2(64, 64))
 font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/6x12.bdf")
 test = font.glyph("h").draw().concat(font.glyph("i").draw())
 im = Image.frombytes("RGB", (test.width(), test.height()), test.tobytes("RGB"))
-
-if pipe:
-    pipe.write("CLEAR")
-    pipe.flush()
 
 positions = [Vector2(10, 10)]
 
