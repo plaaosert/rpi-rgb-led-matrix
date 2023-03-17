@@ -72,6 +72,9 @@ class Vector2:
     def distance(self, other):
         return abs(other - self).magnitude()
 
+    def normalized(self):
+        return self / self.magnitude()
+
 
 class Colour:
     def __init__(self, r: int, g: int, b: int, ignore_validation=False):
@@ -288,7 +291,7 @@ if pipe:
     pipe.flush()
 
 pos = Vector2(10, 10)
-speed = Vector2(1 - (random.random() * 2), 1 - (random.random() * 2))
+speed = Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized()
 
 w, h = im.size
 col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
