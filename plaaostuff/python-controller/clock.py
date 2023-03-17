@@ -297,12 +297,12 @@ w, h = im.size
 col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 while True:
     pos += speed
-    if 10 < pos.x < 56:
+    if not (10 < pos.x < 56):
         speed *= Vector2(-1, 1)
         pos.x = max(10, min(56, pos.x))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
-    if 10 < pos.y < 56:
+    if not (10 < pos.y < 56):
         speed *= Vector2(1, -1)
         pos.y = max(10, min(56, pos.y))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
