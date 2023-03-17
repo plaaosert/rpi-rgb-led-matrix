@@ -357,7 +357,7 @@ while True:
             else:
                 buffer += part + "|"
 
-        print(", ".join(str(len(b)) for b in sts))
+        print(", ".join("...{} ({})".format(b[:-64], len(b)) for b in sts))
     else:
         sts = [st]
 
