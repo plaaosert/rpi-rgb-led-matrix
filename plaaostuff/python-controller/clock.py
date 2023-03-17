@@ -356,6 +356,8 @@ while True:
                 buffer = part + "|"
             else:
                 buffer += part + "|"
+
+        sts.append(buffer)
     else:
         sts = [st]
 
