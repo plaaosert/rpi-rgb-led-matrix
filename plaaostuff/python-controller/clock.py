@@ -294,7 +294,7 @@ if pipe:
 
 positions = [Vector2(10, 10)]
 
-speeds = [Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized()]
+speeds = [Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 100)]
 
 w, h = im.size
 cols = [Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))]
@@ -302,7 +302,7 @@ bounds_x = (0, 54)
 bounds_y = (0, 53)
 
 ticks = 0
-timeout = 200
+timeout = 256
 
 frame_time = time.time()
 while True:
@@ -314,9 +314,8 @@ while True:
     ticks += 1
     if ticks % timeout == timeout - 1:
         ticks = 0
-        timeout = int(timeout / 1.3)
         positions.append(Vector2(10, 10))
-        speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized())
+        speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 100))
         cols.append(Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192)))
 
     for index in range(len(positions)):
