@@ -308,65 +308,71 @@ ticks = 0
 timeout = 256
 
 frame_time = time.time()
-while True:
-    while time.time() - frame_time < 1/60:
-        time.sleep(0.0001)
+try:
+    while True:
+        while time.time() - frame_time < 1/60:
+            time.sleep(0.0001)
 
-    frame_time = time.time()
+        frame_time = time.time()
 
-    ticks += 1
-    if ticks % timeout == timeout - 1:
-        ticks = 0
-        timeout = max(8, int(timeout / 1.05))
+        ticks += 1
+        if ticks % timeout == timeout - 1:
+            ticks = 0
+            timeout = max(8, int(timeout / 1.05))
 
-        positions.append(Vector2(10, 10))
-        speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 200))
-        cols.append(Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192)))
+            positions.append(Vector2(10, 10))
+            speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 200))
+            cols.append(Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192)))
 
-    for index in range(len(positions)):
-        pos = positions[index]
-        speed = speeds[index]
+        for index in range(len(positions)):
+            pos = positions[index]
+            speed = speeds[index]
 
-        positions[index] = pos + speed
-        pos = positions[index]
+            positions[index] = pos + speed
+            pos = positions[index]
 
-        if not (bounds_x[0] <= pos.x < bounds_x[1]):
-            speeds[index] = speed * Vector2(-1, 1)
-            pos.x = max(bounds_x[0], min(bounds_x[1], pos.x))
-            cols[index] = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+            if not (bounds_x[0] <= pos.x < bounds_x[1]):
+                speeds[index] = speed * Vector2(-1, 1)
+                pos.x = max(bounds_x[0], min(bounds_x[1], pos.x))
+                cols[index] = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
-        if not (bounds_y[0] <= pos.y < bounds_y[1]):
-            speeds[index] = speed * Vector2(1, -1)
-            pos.y = max(bounds_y[0], min(bounds_y[1], pos.y))
-            cols[index] = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+            if not (bounds_y[0] <= pos.y < bounds_y[1]):
+                speeds[index] = speed * Vector2(1, -1)
+                pos.y = max(bounds_y[0], min(bounds_y[1], pos.y))
+                cols[index] = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
-        text_pos = pos.floor_to_intvec()
-        for x in range(w):
-            for y in range(h):
-                pixelpos = text_pos + Vector2(x, y)
-                if im.getpixel((x, y)) == (0, 0, 0):
-                    canvas.set_pixel(pixelpos, cols[index])
+            text_pos = pos.floor_to_intvec()
+            for x in range(w):
+                for y in range(h):
+                    pixelpos = text_pos + Vector2(x, y)
+                    if im.getpixel((x, y)) == (0, 0, 0):
+                        canvas.set_pixel(pixelpos, cols[index])
 
-    st = canvas.update_changes(clear_last=True)
-    sts = []
+        st = canvas.update_changes(clear_last=True)
+        sts = []
 
-    if len(st) > 4096:
-        buffer = ""
-        for part in st.split("|"):
-            if len(buffer + part + "|") > 4096:
-                sts.append(buffer)
-                buffer = part + "|"
-            else:
-                buffer += part + "|"
+        if len(st) > 4096:
+            buffer = ""
+            for part in st.split("|"):
+                if len(buffer + part + "|") > 4096:
+                    sts.append(buffer)
+                    buffer = part + "|"
+                else:
+                    buffer += part + "|"
 
-        sts.append(buffer)
-    else:
-        sts = [st]
+            sts.append(buffer)
+        else:
+            sts = [st]
 
-    if print_canvas:
-        print("\033[1;1H" + str(canvas))
+        if print_canvas:
+            print("\033[1;1H" + str(canvas))
 
+        if pipe:
+            for st in sts:
+                pipe.write(st)
+                pipe.flush()
+except KeyboardInterrupt:
+    print("\033[1;1HInterrupted. Clearing screen and exiting...\n")
     if pipe:
-        for st in sts:
-            pipe.write(st)
-            pipe.flush()
+        pipe.write("CLEAR")
+        pipe.flush()
