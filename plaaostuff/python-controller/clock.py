@@ -306,7 +306,7 @@ timeout = 256
 
 frame_time = time.time()
 while True:
-    while time.time() - frame_time < 1/60:
+    while time.time() - frame_time < 1/12:
         time.sleep(0.0001)
 
     frame_time = time.time()
