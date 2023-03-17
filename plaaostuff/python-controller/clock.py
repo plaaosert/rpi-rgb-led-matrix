@@ -314,7 +314,7 @@ while True:
             if im.getpixel((x, y)) == (0, 0, 0):
                 canvas.set_pixel(pixelpos, col)
 
-    st = canvas.update_changes(True)
+    st = canvas.update_changes(clear_last=True)
 
     print("\033[1;1H" + str(canvas))
 
