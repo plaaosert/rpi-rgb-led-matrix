@@ -313,7 +313,9 @@ while True:
         pos = positions[index]
         speed = speeds[index]
 
-        pos += speed
+        positions[index] = pos + speed
+        pos = positions[index]
+
         if not (bounds_x[0] <= pos.x < bounds_x[1]):
             speed *= Vector2(-1, 1)
             pos.x = max(bounds_x[0], min(bounds_x[1], pos.x))
