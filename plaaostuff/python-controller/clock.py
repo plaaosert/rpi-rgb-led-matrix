@@ -300,12 +300,12 @@ col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 
 while True:
     pos += speed
     if not (10 < pos.x < 56):
-        speed *= Vector2(-1, 1)
+        speed = Vector2(-speed.x, speed.y)
         pos.x = max(10, min(56, pos.x))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
     if not (10 < pos.y < 56):
-        speed *= Vector2(1, -1)
+        speed = Vector2(speed.x, -speed.y)
         pos.y = max(10, min(56, pos.y))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
