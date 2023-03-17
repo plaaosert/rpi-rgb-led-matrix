@@ -292,33 +292,44 @@ if pipe:
     pipe.write("CLEAR")
     pipe.flush()
 
-pos = Vector2(10, 10)
+positions = [Vector2(10, 10)]
 
-speed = Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized()
+speeds = [Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized()]
 
 w, h = im.size
 col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 bounds_x = (0, 54)
 bounds_y = (0, 53)
 
+ticks = 0
+
 while True:
-    pos += speed
-    if not (bounds_x[0] <= pos.x < bounds_x[1]):
-        speed *= Vector2(-1, 1)
-        pos.x = max(bounds_x[0], min(bounds_x[1], pos.x))
-        col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+    ticks += 1
+    if ticks % 200 == 199:
+        positions.append(Vector2(10, 10))
+        speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized())
 
-    if not (bounds_y[0] <= pos.y < bounds_y[1]):
-        speed *= Vector2(1, -1)
-        pos.y = max(bounds_y[0], min(bounds_y[1], pos.y))
-        col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+    for index in range(len(positions)):
+        pos = positions[index]
+        speed = speeds[index]
 
-    text_pos = pos.floor_to_intvec()
-    for x in range(w):
-        for y in range(h):
-            pixelpos = text_pos + Vector2(x, y)
-            if im.getpixel((x, y)) == (0, 0, 0):
-                canvas.set_pixel(pixelpos, col)
+        pos += speed
+        if not (bounds_x[0] <= pos.x < bounds_x[1]):
+            speed *= Vector2(-1, 1)
+            pos.x = max(bounds_x[0], min(bounds_x[1], pos.x))
+            col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+
+        if not (bounds_y[0] <= pos.y < bounds_y[1]):
+            speed *= Vector2(1, -1)
+            pos.y = max(bounds_y[0], min(bounds_y[1], pos.y))
+            col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+
+        text_pos = pos.floor_to_intvec()
+        for x in range(w):
+            for y in range(h):
+                pixelpos = text_pos + Vector2(x, y)
+                if im.getpixel((x, y)) == (0, 0, 0):
+                    canvas.set_pixel(pixelpos, col)
 
     st = canvas.update_changes(clear_last=True)
 
