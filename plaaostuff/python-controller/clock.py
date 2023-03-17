@@ -297,16 +297,18 @@ speed = Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized
 
 w, h = im.size
 col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+bounds = (0, 55)
+
 while True:
     pos += speed
-    if not (10 < pos.x < 56):
-        speed = Vector2(-speed.x, speed.y)
-        pos.x = max(10, min(56, pos.x))
+    if not (bounds[0] < pos.x < bounds[1]):
+        speed *= Vector2(-1, 1)
+        pos.x = max(bounds[0], min(bounds[1], pos.x))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
-    if not (10 < pos.y < 56):
-        speed = Vector2(speed.x, -speed.y)
-        pos.y = max(10, min(56, pos.y))
+    if not (bounds[0] < pos.y < bounds[1]):
+        speed *= Vector2(1, -1)
+        pos.y = max(bounds[0], min(bounds[1], pos.y))
         col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
     text_pos = pos.floor_to_intvec()
