@@ -302,16 +302,18 @@ bounds_x = (0, 54)
 bounds_y = (0, 53)
 
 ticks = 0
+timeout = 200
 
 frame_time = time.time()
 while True:
     while time.time() - frame_time < 1/60:
-        pass
+        time.sleep(0.0001)
 
     frame_time = time.time()
 
     ticks += 1
-    if ticks % 200 == 199:
+    if ticks % timeout == timeout - 1:
+        timeout = int(timeout / 1.3)
         positions.append(Vector2(10, 10))
         speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized())
         cols.append(Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192)))
