@@ -256,7 +256,7 @@ class Canvas:
         self.changes[pos] = Canvas.Pixel(pos, col)
 
     def get_pixel(self, pos: Vector2, wrt_changes: bool = True) -> Colour:
-        col = self.current_canvas
+        col = self.current_canvas[pos.x][pos.y]
         if wrt_changes:
             # check for any fills
             if self.fill == Canvas.FILLTYPE.CLEAR:
