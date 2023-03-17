@@ -300,7 +300,7 @@ positions = [Vector2(10, 10)]
 speeds = [Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 100)]
 
 w, h = im.size
-cols = [Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))]
+cols = [Colour(random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))]
 bounds_x = (0, 54)
 bounds_y = (0, 53)
 
@@ -356,6 +356,8 @@ while True:
                 buffer = part + "|"
             else:
                 buffer += part + "|"
+
+        print(", ".join(str(len(b)) for b in sts))
     else:
         sts = [st]
 
