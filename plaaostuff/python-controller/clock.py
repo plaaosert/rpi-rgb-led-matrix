@@ -293,12 +293,13 @@ if pipe:
     pipe.flush()
 
 pos = Vector2(10, 10)
+
 speed = Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized()
 
 w, h = im.size
 col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
-bounds_x = (0, 32)
-bounds_y = (0, 32)
+bounds_x = (0, 50)
+bounds_y = (0, 50)
 
 while True:
     pos += speed
