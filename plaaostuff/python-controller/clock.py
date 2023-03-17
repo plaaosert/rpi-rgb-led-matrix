@@ -280,8 +280,10 @@ class Canvas:
 os.system("clear")
 
 pipe = None
-if "-nopipe" not in sys.argv:
+if "--no-pipe" not in sys.argv:
     pipe = open("/home/pi/scrimblopipe", "w")
+
+print_canvas = "--print-canvas" in sys.argv
 
 canvas = Canvas(Vector2(64, 64))
 font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/6x12.bdf")
@@ -306,7 +308,7 @@ timeout = 256
 
 frame_time = time.time()
 while True:
-    while time.time() - frame_time < 1/12:
+    while time.time() - frame_time < 1/60:
         time.sleep(0.0001)
 
     frame_time = time.time()
@@ -344,7 +346,8 @@ while True:
 
     st = canvas.update_changes(clear_last=True)
 
-    print("\033[1;1H" + str(canvas))
+    if print_canvas:
+        print("\033[1;1H" + str(canvas))
 
     if pipe:
         pipe.write(st)
