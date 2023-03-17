@@ -297,7 +297,7 @@ if pipe:
 
 positions = [Vector2(10, 10)]
 
-speeds = [Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 100)]
+speeds = [Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 200)]
 
 w, h = im.size
 cols = [Colour(random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))]
@@ -305,7 +305,7 @@ bounds_x = (0, 54)
 bounds_y = (0, 53)
 
 ticks = 0
-timeout = 32
+timeout = 256
 
 frame_time = time.time()
 while True:
@@ -317,8 +317,10 @@ while True:
     ticks += 1
     if ticks % timeout == timeout - 1:
         ticks = 0
+        timeout = max(8, int(timeout / 1.25))
+
         positions.append(Vector2(10, 10))
-        speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 100))
+        speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized() * (float(random.randint(50, 150)) / 200))
         cols.append(Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192)))
 
     for index in range(len(positions)):
@@ -360,8 +362,6 @@ while True:
         sts.append(buffer)
     else:
         sts = [st]
-
-    print("bufs:\n" + "\n".join("...{} ({})".format(b[-32:], len(b)) for b in sts), end="\n\n")
 
     if print_canvas:
         print("\033[1;1H" + str(canvas))
