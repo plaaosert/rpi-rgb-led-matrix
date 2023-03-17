@@ -356,10 +356,10 @@ while True:
                 buffer = part + "|"
             else:
                 buffer += part + "|"
-
-        print("bufs:\n" + "\n".join("...{} ({})".format(b[-64:], len(b)) for b in sts), end="\n\n")
     else:
         sts = [st]
+
+    print("bufs:\n" + "\n".join("...{} ({})".format(b[-32:], len(b)) for b in sts), end="\n\n")
 
     if print_canvas:
         print("\033[1;1H" + str(canvas))
