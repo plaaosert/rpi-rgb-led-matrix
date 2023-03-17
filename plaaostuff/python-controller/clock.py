@@ -1,7 +1,7 @@
 import math
 import os
 from enum import Enum
-from typing import Tuple, List, Final, Dict
+from typing import Tuple, List, Dict
 
 from bdfparser import Font
 from PIL import Image
@@ -76,9 +76,9 @@ class Vector2:
 class Colour:
     def __init__(self, r: int, g: int, b: int, ignore_validation=False):
         self.initialised = False
-        self.r: Final[int] = r if ignore_validation else max(0, min(255, r))
-        self.g: Final[int] = g if ignore_validation else max(0, min(255, g))
-        self.b: Final[int] = b if ignore_validation else max(0, min(255, b))
+        self.r: int = r if ignore_validation else max(0, min(255, r))
+        self.g: int = g if ignore_validation else max(0, min(255, g))
+        self.b: int = b if ignore_validation else max(0, min(255, b))
 
         self.initialised = True
 
