@@ -297,17 +297,24 @@ positions = [Vector2(10, 10)]
 speeds = [Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized()]
 
 w, h = im.size
-col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+cols = [Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))]
 bounds_x = (0, 54)
 bounds_y = (0, 53)
 
 ticks = 0
 
+frame_time = time.time()
 while True:
+    while time.time() - frame_time < 1/60:
+        pass
+
+    frame_time = time.time()
+
     ticks += 1
     if ticks % 200 == 199:
         positions.append(Vector2(10, 10))
         speeds.append(Vector2(1 - (random.random() * 2), 1 - (random.random() * 2)).normalized())
+        cols.append(Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192)))
 
     for index in range(len(positions)):
         pos = positions[index]
@@ -319,19 +326,19 @@ while True:
         if not (bounds_x[0] <= pos.x < bounds_x[1]):
             speeds[index] = speed * Vector2(-1, 1)
             pos.x = max(bounds_x[0], min(bounds_x[1], pos.x))
-            col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+            cols[index] = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
         if not (bounds_y[0] <= pos.y < bounds_y[1]):
             speeds[index] = speed * Vector2(1, -1)
             pos.y = max(bounds_y[0], min(bounds_y[1], pos.y))
-            col = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
+            cols[index] = Colour(random.randint(0, 192), random.randint(64, 256), random.randint(0, 192))
 
         text_pos = pos.floor_to_intvec()
         for x in range(w):
             for y in range(h):
                 pixelpos = text_pos + Vector2(x, y)
                 if im.getpixel((x, y)) == (0, 0, 0):
-                    canvas.set_pixel(pixelpos, col)
+                    canvas.set_pixel(pixelpos, cols[index])
 
     st = canvas.update_changes(clear_last=True)
 
