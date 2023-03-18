@@ -23,16 +23,16 @@ if "--no-pipe" not in sys.argv:
 print_canvas = "--print-canvas" in sys.argv
 
 canvas = Canvas(Vector2(64, 64))
-font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/10x20.bdf")
+font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/7x14.bdf")
 font2 = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/7x14.bdf")
 
 text_pos = Vector2(1, 1)
 text_col = Colour(34, 139, 34)
 
-text_subpos = Vector2(1, 25)
+text_subpos = Vector2(1, 20)
 text_subcol = text_col.fade_black(0.3)
 
-text_subsubpos = Vector2(1, 25)
+text_subsubpos = Vector2(1, 40)
 
 last_recorded_time = time.time()
 try:
