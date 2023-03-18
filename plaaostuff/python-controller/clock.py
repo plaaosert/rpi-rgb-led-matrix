@@ -32,7 +32,7 @@ text_col = Colour(34, 139, 34)
 text_subpos = Vector2(1, 25)
 text_subcol = text_col.fade_black(0.3)
 
-text_subsubpos = Vector2(1, 45)
+text_subsubpos = Vector2(1, 25)
 
 last_recorded_time = time.time()
 try:
