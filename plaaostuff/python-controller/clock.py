@@ -27,10 +27,10 @@ font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/5x8.bdf")
 font2 = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/5x7.bdf")
 
 text_pos = Vector2(1, 1)
-text_col = Colour(0, 139, 0)
+text_col = Colour(0, 255, 0)
 
 text_subpos = Vector2(1, 10)
-text_subcol = text_col.fade_black(0.3)
+text_subcol = text_col.fade_black(0.8)
 
 text_subsubpos = Vector2(1, 18)
 
