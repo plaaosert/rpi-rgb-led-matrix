@@ -23,16 +23,16 @@ if "--no-pipe" not in sys.argv:
 print_canvas = "--print-canvas" in sys.argv
 
 canvas = Canvas(Vector2(64, 64))
-font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/7x14.bdf")
-font2 = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/7x14.bdf")
+font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/5x8.bdf")
+font2 = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/5x7.bdf")
 
 text_pos = Vector2(1, 1)
-text_col = Colour(34, 139, 34)
+text_col = Colour(0, 139, 0)
 
-text_subpos = Vector2(1, 20)
+text_subpos = Vector2(1, 10)
 text_subcol = text_col.fade_black(0.3)
 
-text_subsubpos = Vector2(1, 40)
+text_subsubpos = Vector2(1, 18)
 
 last_recorded_time = time.time()
 try:
@@ -44,8 +44,8 @@ try:
 
         cur_time = datetime.datetime.now()
         canvas.set_text(text_pos, font, cur_time.strftime('%X'), text_col)
-        canvas.set_text(text_subpos, font, cur_time.strftime('%x'), text_col)
-        canvas.set_text(text_subsubpos, font2, cur_time.strftime('%A'), text_col)
+        canvas.set_text(text_subpos, font, cur_time.strftime('%x'), text_subcol)
+        canvas.set_text(text_subsubpos, font2, cur_time.strftime('%A'), text_subcol)
 
         st = canvas.update_changes(clear_last=True)
 
