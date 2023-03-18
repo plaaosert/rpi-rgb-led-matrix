@@ -49,7 +49,7 @@ class Colour:
     def __add__(self, other):
         Colour.check_type(other)
 
-        return Colour(self.r + other.r, self.g + other.g, self.b + other.b)
+        return Colour(self.r + other.r, self.g + other.g, self.b + other.b, ignore_validation=True)
 
     def __sub__(self, other):
         Colour.check_type(other)
@@ -58,18 +58,18 @@ class Colour:
 
     def __mul__(self, other):
         if isinstance(other, Colour):
-            return Colour(int(self.r * other.r), int(self.g * other.g), int(self.b * other.b))
+            return Colour(int(self.r * other.r), int(self.g * other.g), int(self.b * other.b), ignore_validation=True)
         else:
-            return Colour(int(self.r * other), int(self.g * other), int(self.b * other))
+            return Colour(int(self.r * other), int(self.g * other), int(self.b * other), ignore_validation=True)
 
     def __truediv__(self, other):
         return self // other
 
     def __floordiv__(self, other):
         if isinstance(other, Colour):
-            return Colour(int(self.r // other.r), int(self.g // other.g), int(self.b // other.b))
+            return Colour(int(self.r // other.r), int(self.g // other.g), int(self.b // other.b), ignore_validation=True)
         else:
-            return Colour(int(self.r // other), int(self.g // other), int(self.b // other))
+            return Colour(int(self.r // other), int(self.g // other), int(self.b // other), ignore_validation=True)
 
     def lerp(self, other: "Colour", amount: float) -> "Colour":
         diff = other - self
