@@ -35,10 +35,10 @@ font2 = Font(path.from_root("../../fonts/4x6.bdf"))
 text_pos = Vector2(7, 1)
 text_col = Colour(12, 201, 12)
 
-text_subpos = Vector2(14, 22)
+text_subpos = Vector2(15, 22)
 text_subcol = Colour(0, 101, 0)
 
-text_subsubpos = Vector2(14, 14)
+text_subsubpos = Vector2(15, 14)
 
 last_recorded_time = time.time()
 try:
