@@ -1,6 +1,7 @@
 import datetime
 import math
 import os
+import platform
 
 from bdfparser import Font
 from PIL import Image
@@ -15,25 +16,29 @@ import rpi_ipc
 
 
 # set up constants
-os.system("clear")
+print_canvas = False
+if "linux" in platform.platform().lower():
+    print_canvas = "--print-canvas" in sys.argv
+    os.system("clear")
+else:
+    print_canvas = "--no-print-canvas" not in sys.argv
+    os.system("cls")
 
 pipe = None
 if "--no-pipe" not in sys.argv:
     pipe = rpi_ipc.open_pipe(clear=True)
 
-print_canvas = "--print-canvas" in sys.argv
-
 canvas = Canvas(Vector2(64, 64))
-font = Font(path.from_root("../../fonts/6x10.bdf"))
+font = Font(path.from_root("../../fonts/6x12.bdf"))
 font2 = Font(path.from_root("../../fonts/4x6.bdf"))
 
-text_pos = Vector2(5, 1)
-text_col = Colour(34, 139, 34)
+text_pos = Vector2(7, 1)
+text_col = Colour(12, 201, 12)
 
-text_subpos = Vector2(1, 13)
-text_subcol = text_col.fade_black(0.4)
+text_subpos = Vector2(14, 22)
+text_subcol = Colour(0, 101, 0)
 
-text_subsubpos = Vector2(32, 13)
+text_subsubpos = Vector2(14, 14)
 
 last_recorded_time = time.time()
 try:

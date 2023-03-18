@@ -1,4 +1,5 @@
 import os
+import platform
 
 from bdfparser import Font
 from PIL import Image
@@ -13,13 +14,17 @@ import rpi_ipc
 
 
 # set up constants
-os.system("clear")
+print_canvas = False
+if "linux" in platform.platform().lower():
+    print_canvas = "--print-canvas" in sys.argv
+    os.system("clear")
+else:
+    print_canvas = "--no-print-canvas" not in sys.argv
+    os.system("cls")
 
 pipe = None
 if "--no-pipe" not in sys.argv:
     pipe = rpi_ipc.open_pipe(clear=True)
-
-print_canvas = "--print-canvas" in sys.argv
 
 canvas = Canvas(Vector2(64, 64))
 font = Font(path.from_root("../../fonts/6x12.bdf"))
