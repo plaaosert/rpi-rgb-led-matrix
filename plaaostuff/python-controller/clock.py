@@ -44,7 +44,7 @@ try:
 
         cur_time = datetime.datetime.now()
         canvas.set_text(text_pos, font, cur_time.strftime('%X'), text_col)
-        canvas.set_text(text_subpos, font, cur_time.strftime('%x'), text_subcol)
+        canvas.set_text(text_subpos, font2, cur_time.strftime('%x'), text_subcol)
         canvas.set_text(text_subsubpos, font2, cur_time.strftime('%A'), text_subcol)
 
         st = canvas.update_changes(clear_last=True)
