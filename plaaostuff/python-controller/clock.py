@@ -24,15 +24,15 @@ print_canvas = "--print-canvas" in sys.argv
 
 canvas = Canvas(Vector2(64, 64))
 font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/6x10.bdf")
-font2 = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/6x10.bdf")
+font2 = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/4x6.bdf")
 
-text_pos = Vector2(1, 1)
+text_pos = Vector2(5, 1)
 text_col = Colour(34, 139, 34)
 
-text_subpos = Vector2(1, 12)
+text_subpos = Vector2(1, 13)
 text_subcol = text_col.fade_black(0.4)
 
-text_subsubpos = Vector2(1, 23)
+text_subsubpos = Vector2(32, 13)
 
 last_recorded_time = time.time()
 try:
