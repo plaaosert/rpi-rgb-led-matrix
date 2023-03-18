@@ -23,7 +23,7 @@ print_canvas = "--print-canvas" in sys.argv
 canvas = Canvas(Vector2(64, 64))
 font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/6x12.bdf")
 test = font.glyph("h").draw().concat(font.glyph("i").draw())
-im = Image.frombytes("RGB", (test.width(), test.height()), test.tobytes("RGB"))
+im = Image.frombytes("RGBA", (test.width(), test.height()), test.tobytes("RGBA"))
 
 positions = [Vector2(10, 10)]
 
