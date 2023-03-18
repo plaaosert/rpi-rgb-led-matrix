@@ -6,6 +6,7 @@ import random
 import time
 import sys
 
+import path
 from canvas import Colour, Canvas
 from dat import Vector2
 import rpi_ipc
@@ -21,7 +22,7 @@ if "--no-pipe" not in sys.argv:
 print_canvas = "--print-canvas" in sys.argv
 
 canvas = Canvas(Vector2(64, 64))
-font = Font("/home/pi/ledmatrix_things/rpi-rgb-led-matrix/fonts/6x12.bdf")
+font = Font(path.from_root("../../fonts/6x12.bdf"))
 test = font.glyph("h").draw().concat(font.glyph("i").draw())
 im = Image.frombytes("RGBA", (test.width(), test.height()), test.tobytes("RGBA"))
 

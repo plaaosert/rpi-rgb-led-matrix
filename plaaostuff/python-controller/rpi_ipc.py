@@ -1,10 +1,14 @@
-def open_pipe(clear=False):
-    pipe = open("/home/pi/scrimblopipe", "w")
-    if clear:
-        pipe.write("CLEAR")
-        pipe.flush()
+import os
 
-    return pipe
+
+def open_pipe(clear=False):
+    if os.path.exists("/home/pi/scrimblopipe"):
+        pipe = open("/home/pi/scrimblopipe", "w")
+        if clear:
+            pipe.write("CLEAR")
+            pipe.flush()
+
+        return pipe
 
 
 def send_pipe(pipe, messages):
