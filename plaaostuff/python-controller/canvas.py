@@ -90,6 +90,23 @@ Colour.blue = Colour(0, 0, 255)
 
 
 class Canvas:
+    broken_pixels = (
+        Vector2(0, 0),
+        Vector2(0, 1),
+        Vector2(0, 2),
+        Vector2(1, 0),
+
+        Vector2(62, 61),
+        Vector2(62, 62),
+        Vector2(62, 63),
+
+        Vector2(63, 61),
+        Vector2(63, 62),
+        Vector2(63, 63),
+
+        *(Vector2(x, 10) for x in range(10, 40))
+    )
+
     class FILLTYPE(Enum):
         NONE = 0
         CLEAR = 1
@@ -107,6 +124,10 @@ class Canvas:
             col = self.col
             if self.pos == Vector2(4, 35):
                 col = Colour(col.r, 0, col.b)
+
+            # dropped the matrix! lol
+            if self.pos in Canvas.broken_pixels:
+                col = Colour(0, 0, 0)
 
             return "{},{}|".format(str(self.pos), str(col))
 
@@ -155,6 +176,12 @@ class Canvas:
                 self.fill_col.r,
                 self.fill_col.b
             )
+
+            # dropped the matrix so turn off all the broken pixels if we fill
+            for pixel in Canvas.broken_pixels:
+                changes_string += "{},0,0,0|".format(
+                    str(pixel)
+                )
 
             self.current_canvas: List[List[Colour]] = [
                 [self.fill_col for _ in range(self.dimensions.y)] for __ in range(self.dimensions.x)
