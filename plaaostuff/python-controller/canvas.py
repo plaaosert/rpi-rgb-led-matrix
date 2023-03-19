@@ -108,9 +108,7 @@ class Canvas:
 
         Vector2(63, 61),
         Vector2(63, 62),
-        Vector2(63, 63),
-
-        *(Vector2(x, 10) for x in range(10, 40))
+        Vector2(63, 63)
     }
 
     class FILLTYPE(Enum):
