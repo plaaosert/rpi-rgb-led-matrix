@@ -96,7 +96,7 @@ Colour.blue = Colour(0, 0, 255)
 
 
 class Canvas:
-    broken_pixels = (
+    broken_pixels = {
         Vector2(0, 0),
         Vector2(0, 1),
         Vector2(0, 2),
@@ -111,7 +111,7 @@ class Canvas:
         Vector2(63, 63),
 
         *(Vector2(x, 10) for x in range(10, 40))
-    )
+    }
 
     class FILLTYPE(Enum):
         NONE = 0
