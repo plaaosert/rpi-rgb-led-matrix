@@ -112,6 +112,11 @@ try:
 
 except KeyboardInterrupt:
     if print_canvas:
+        if "linux" in platform.platform().lower():
+            os.system("clear")
+        else:
+            os.system("cls")
+
         print("\033[1;1HInterrupted. Clearing screen and exiting...\n")
     else:
         print("Interrupted. Clearing screen and exiting...\n")
