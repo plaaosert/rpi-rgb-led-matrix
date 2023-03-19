@@ -43,11 +43,11 @@ date_pos = Vector2(1, 21)
 temperature_pos = Vector2(42, 14)
 temperature_cols = (
     (Colour(192, 0, 0), 30),
-    (Colour(192, 192, 0), 21),
-    (Colour(32, 192, 32), 12),
+    (Colour(128, 128, 32), 21),
+    (Colour(64, 128, 64), 12),
     (Colour(0, 64, 192), 0),
     (Colour(0, 32, 128), -10),
-    (Colour(0, 0, 96), -9999999)
+    (Colour(0, 0, 64), -9999999)
 )
 
 recorded_temperature = -20
