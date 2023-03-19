@@ -8,6 +8,12 @@ from PIL import Image
 
 
 class Colour:
+    black = None
+    white = None
+    red = None
+    green = None
+    blue = None
+
     def __init__(self, r: int, g: int, b: int, ignore_validation=False):
         self.initialised = False
         self.r: int = r if ignore_validation else max(0, min(255, r))
