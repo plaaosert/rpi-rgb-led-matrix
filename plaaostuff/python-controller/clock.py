@@ -55,7 +55,7 @@ recorded_temperature = -20
 last_recorded_time = time.time()
 try:
     while True:
-        while time.time() < math.floor(last_recorded_time - 1):
+        while time.time() < math.floor(last_recorded_time + 1):
             time.sleep(0.1)
 
         last_recorded_time = round(time.time())
