@@ -42,12 +42,12 @@ date_pos = Vector2(1, 21)
 
 temperature_pos = Vector2(42, 14)
 temperature_cols = (
-    (Colour.from_hex("CA054D"), 30),
-    (Colour.from_hex("FA9F42"), 21),
-    (Colour.from_hex("89BD9E"), 12),
-    (Colour.from_hex("6290C3"), 0),
-    (Colour.from_hex("496DDB"), -10),
-    (Colour.from_hex("111D4A"), -9999999)
+    (Colour(192, 0, 0), 30),
+    (Colour(192, 192, 0), 21),
+    (Colour(32, 192, 32), 12),
+    (Colour(0, 64, 192), 0),
+    (Colour(0, 32, 128), -10),
+    (Colour(0, 0, 96), -9999999)
 )
 
 recorded_temperature = -20
@@ -72,7 +72,7 @@ try:
             temperature_col = temperature_cols[temp_index]
 
         canvas.set_text(temperature_pos, font2, "{:-3}C".format(int(round(recorded_temperature))), temperature_col[0])
-        recorded_temperature += 1
+        recorded_temperature += 2
 
         st = canvas.update_changes(clear_last=True)
 
