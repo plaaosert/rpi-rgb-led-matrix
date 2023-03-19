@@ -105,7 +105,7 @@ try:
         if print_canvas:
             print("\033[1;1H" + str(canvas))
 
-        print("Last frame took \033[32m{:8} seconds\r".format(round(time.time() - last_print_time, 4)), end="")
+        print("\033[0mLast frame took \033[32m{:8} \033[0mseconds\r".format(round(time.time() - last_print_time, 4)), end="")
         last_print_time = time.time()
 
         rpi_ipc.send_prot_msg(pipe, st)
