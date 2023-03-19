@@ -16,6 +16,9 @@ from dat import Vector2
 import rpi_ipc
 
 
+last_print_time = time.time()
+
+
 # set up constants
 print_canvas = False
 if "linux" in platform.platform().lower():
@@ -102,10 +105,17 @@ try:
         if print_canvas:
             print("\033[1;1H" + str(canvas))
 
+        print("Last frame took {} seconds\r".format(last_print_time), end="")
+        last_print_time = time.time()
+
         rpi_ipc.send_prot_msg(pipe, st)
 
 except KeyboardInterrupt:
-    print("\033[1;1HInterrupted. Clearing screen and exiting...\n")
+    if print_canvas:
+        print("\033[1;1HInterrupted. Clearing screen and exiting...\n")
+    else:
+        print("Interrupted. Clearing screen and exiting...\n")
+
     if pipe:
         pipe.write("CLEAR")
         pipe.flush()
