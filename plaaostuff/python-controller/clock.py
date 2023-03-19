@@ -64,7 +64,7 @@ last_recorded_time = time.time()
 try:
     while True:
         while time.time() < math.floor(last_recorded_time + 1):
-            time.sleep(0.02)
+            time.sleep(min(0.02, math.floor(last_recorded_time + 1) - time.time()))
 
         last_recorded_time = round(time.time())
 
