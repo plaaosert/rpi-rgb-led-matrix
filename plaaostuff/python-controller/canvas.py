@@ -196,7 +196,7 @@ class Canvas:
         self.fill_col = fill_col
 
     def set_pixel(self, pos: Vector2, col: Colour):
-        if not ((0 < pos.x < self.dimensions.x) or (0 < pos.y < self.dimensions.y)):
+        if not ((0 < pos.x < self.dimensions.x) and (0 < pos.y < self.dimensions.y)):
             return
 
         # isnt it crazy what boilerplate can do?
@@ -231,7 +231,7 @@ class Canvas:
             self.set_image(pos, im, col)
 
     def get_pixel(self, pos: Vector2, wrt_changes: bool = True) -> Colour:
-        if not ((0 < pos.x < self.dimensions.x) or (0 < pos.y < self.dimensions.y)):
+        if not ((0 < pos.x < self.dimensions.x) and (0 < pos.y < self.dimensions.y)):
             return Colour.black
 
         col = self.current_canvas[pos.x][pos.y]

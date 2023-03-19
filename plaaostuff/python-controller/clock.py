@@ -32,26 +32,47 @@ canvas = Canvas(Vector2(64, 64))
 font = Font(path.from_root("../../fonts/6x12.bdf"))
 font2 = Font(path.from_root("../../fonts/5x7.bdf"))
 
-text_pos = Vector2(7, 1)
-text_col = Colour(12, 130, 12)
+clock_pos = Vector2(7, 1)
+clock_main_col = Colour(12, 130, 12)
 
-text_subpos = Vector2(15, 24)
-text_subcol = Colour(0, 70, 0)
+day_pos = Vector2(2, 14)
+clock_sub_col = Colour(0, 70, 0)
 
-text_subsubpos = Vector2(15, 15)
+date_pos = Vector2(1, 21)
+
+temperature_pos = Vector2(42, 14)
+temperature_cols = (
+    (Colour.from_hex("CA054D"), 30),
+    (Colour.from_hex("FA9F42"), 21),
+    (Colour.from_hex("89BD9E"), 12),
+    (Colour.from_hex("6290C3"), 0),
+    (Colour.from_hex("496DDB"), -10),
+    (Colour.from_hex("111D4A"), -9999999)
+)
+
+recorded_temperature = -20
 
 last_recorded_time = time.time()
 try:
     while True:
-        while time.time() < math.floor(last_recorded_time + 1):
+        while time.time() < math.floor(last_recorded_time - 1):
             time.sleep(0.1)
 
         last_recorded_time = round(time.time())
 
         cur_time = datetime.datetime.now()
-        canvas.set_text(text_pos, font, cur_time.strftime('%X'), text_col)
-        canvas.set_text(text_subpos, font2, cur_time.strftime('%x'), text_subcol)
-        canvas.set_text(text_subsubpos, font2, cur_time.strftime('%A'), text_subcol)
+        canvas.set_text(clock_pos, font, cur_time.strftime('%X'), clock_main_col)
+        canvas.set_text(day_pos, font2, cur_time.strftime('%A'), clock_sub_col)
+        canvas.set_text(date_pos, font2, cur_time.strftime('%x'), clock_sub_col)
+
+        temp_index = 0
+        temperature_col = temperature_cols[0]
+        while recorded_temperature < temperature_col[1]:
+            temp_index += 1
+            temperature_col = temperature_cols[temp_index]
+
+        canvas.set_text(temperature_pos, font2, "{:-3}C".format(int(round(recorded_temperature))), temperature_col[0])
+        recorded_temperature += 1
 
         st = canvas.update_changes(clear_last=True)
 
