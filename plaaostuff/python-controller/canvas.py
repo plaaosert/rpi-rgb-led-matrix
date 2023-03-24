@@ -102,6 +102,8 @@ class Canvas:
         Vector2(0, 2),
         Vector2(1, 0),
 
+        Vector2(63, 0),
+
         Vector2(62, 61),
         Vector2(62, 62),
         Vector2(62, 63),
