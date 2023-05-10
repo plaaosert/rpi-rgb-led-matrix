@@ -136,7 +136,7 @@ try:
 
         sensor_switch_timeout -= 1
         if sensor_switch_timeout < 0 and len(sensor_order) > 0:
-            sensor_switch_timeout = 15
+            sensor_switch_timeout = 5
             current_sensor = (current_sensor + 1) % len(sensor_order)
 
         if current_sensor != -1:
