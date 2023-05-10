@@ -83,11 +83,14 @@ if "linux" in platform.platform().lower():
                     # closed pipe
                     return
 
-                origin, _, payload = data.partition(":")
-                if origin not in sensors:
-                    sensor_order.append(origin)
+                entries = data.split("\n")
+                for entry in entries:
+                    if entry:
+                        origin, _, payload = entry.partition(":")
+                        if origin not in sensors:
+                            sensor_order.append(origin)
 
-                sensors[origin] = payload
+                        sensors[origin] = payload
 
     threading.Thread(target=read_pipe).start()
 
