@@ -33,6 +33,10 @@ pipe = None
 if "--no-pipe" not in sys.argv:
     pipe = rpi_ipc.open_pipe(clear=True)
 
+make_webrequests = True
+if "--no-webrequests" in sys.argv:
+    make_webrequests = False
+
 canvas = Canvas(Vector2(64, 64))
 font = Font(path.from_root("../../fonts/6x12.bdf"))
 font2 = Font(path.from_root("../../fonts/5x7.bdf"))
@@ -57,11 +61,19 @@ temperature_cols = (
     (Colour(0, 0, 64), -9999999)
 )
 
-current_focused_sensor_pos = Vector2(1, 35)
-focused_sensor_info_pos = Vector2(1, 42)
+current_focused_sensor_pos = Vector2(2, 35)
+focused_sensor_info_pos = Vector2(2, 46)
 
 sensors = {}
 sensor_order = []
+sensor_name_lookups = {
+    "temp_humidity_0": "broom closet",
+    "temp_humidity_1": "living room",
+    "temp_humidity_2": "outside"
+}
+
+sensors["temp_humidity_0"] = "25|78"
+sensor_order.append("temp_humidity_0")
 
 current_sensor = -1
 sensor_switch_timeout = 0
@@ -105,7 +117,7 @@ try:
 
         # 30 minutes
         # TODO put this in a different thread since it'll hang the clock
-        if time.time() > record_timeout + (30 * 60):
+        if time.time() > record_timeout + (30 * 60) and make_webrequests:
             record_timeout = time.time()
             response = requests.get("https://wttr.in/Southampton?format=\"%t|%f\"")
 
@@ -143,12 +155,19 @@ try:
         if current_sensor != -1:
             if sensor_order[current_sensor]:
                 canvas.set_text(
-                    current_focused_sensor_pos, font2, sensor_order[current_sensor], Colour(255, 255, 255)
+                    current_focused_sensor_pos, font2, "{:^12}".format(sensor_name_lookups[sensor_order[current_sensor]]), Colour(255, 255, 255)
                 )
 
-            if sensors[sensor_order[current_sensor]]:
+            data = sensors[sensor_order[current_sensor]]
+            if data:
+                temp, _, humid = data.partition("|")
+
                 canvas.set_text(
-                    focused_sensor_info_pos, font2, sensors[sensor_order[current_sensor]], Colour(128, 128, 128)
+                    focused_sensor_info_pos + Vector2(10, 0), font2, temp + "C", Colour(128, 128, 128)
+                )
+
+                canvas.set_text(
+                    focused_sensor_info_pos + Vector2(36, 0), font2, humid + "%", Colour(128, 128, 128)
                 )
 
         canvas.set_text(
