@@ -80,6 +80,7 @@ if "linux" in platform.platform().lower():
             while True:
                 data = f.read()
                 if len(data) == 0:
+                    pass
                     # closed pipe
                     # return
 
