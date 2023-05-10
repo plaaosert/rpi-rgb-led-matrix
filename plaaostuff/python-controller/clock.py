@@ -136,13 +136,16 @@ try:
             current_sensor = (current_sensor + 1) % len(sensor_order)
 
         if current_sensor != -1:
-            canvas.set_text(
-                current_focused_sensor_pos, font2, sensor_order[current_sensor], Colour(255, 255, 255)
-            )
+            print(sensors, sensor_order)
+            if sensor_order[current_sensor]:
+                canvas.set_text(
+                    current_focused_sensor_pos, font2, sensor_order[current_sensor], Colour(255, 255, 255)
+                )
 
-            canvas.set_text(
-                focused_sensor_info_pos, font2, sensors[sensor_order[current_sensor]], Colour(128, 128, 128)
-            )
+            if sensors[sensor_order[current_sensor]]:
+                canvas.set_text(
+                    focused_sensor_info_pos, font2, sensors[sensor_order[current_sensor]], Colour(128, 128, 128)
+                )
 
         st = canvas.update_changes(clear_last=True)
 
