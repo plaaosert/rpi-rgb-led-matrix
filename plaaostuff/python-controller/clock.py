@@ -2,6 +2,7 @@ import datetime
 import math
 import os
 import platform
+import threading
 
 import requests
 from bdfparser import Font
@@ -44,8 +45,9 @@ clock_sub_col = Colour(0, 70, 0)
 
 date_pos = Vector2(1, 21)
 
-temperature_pos = Vector2(42, 14)
-temperature_feel_pos = Vector2(42, 21)
+temperature_pos = Vector2(42, 21)
+temperature_feel_pos = Vector2(42, 28)
+
 temperature_cols = (
     (Colour(192, 0, 0), 30),
     (Colour(128, 128, 32), 21),
@@ -55,12 +57,40 @@ temperature_cols = (
     (Colour(0, 0, 64), -9999999)
 )
 
+current_focused_sensor_pos = Vector2(1, 35)
+focused_sensor_info_pos = Vector2(1, 42)
+
+sensors = {}
+sensor_order = []
+current_sensor = -1
+sensor_switch_timeout = 0
+
 recorded_temperature = 0
 recorded_temperature_feel = 0
 
 record_timeout = 0
 
 last_recorded_time = time.time()
+
+# If on Linux, set up thread here for reading from the info pipe
+if "linux" in platform.platform().lower():
+    def read_pipe():
+        global sensors
+        with open("/home/pi/sensor_inp_pipe", "r") as f:
+            while True:
+                data = f.read()
+                if len(data) == 0:
+                    # closed pipe
+                    return
+
+                origin, _, payload = data.partition(":")
+                if origin not in sensors:
+                    sensor_order.append(origin)
+
+                sensors[origin] = payload
+
+    threading.Thread(target=read_pipe).start()
+
 try:
     while True:
         while time.time() < math.floor(last_recorded_time + 1):
@@ -68,9 +98,9 @@ try:
 
         last_recorded_time = round(time.time())
 
-        # 1 hour
+        # 30 minutes
         # TODO put this in a different thread since it'll hang the clock
-        if time.time() > record_timeout + (60 * 60):
+        if time.time() > record_timeout + (30 * 60):
             record_timeout = time.time()
             response = requests.get("https://wttr.in/Southampton?format=\"%t|%f\"")
 
@@ -100,6 +130,20 @@ try:
             temperature_col[0].fade_black(0.5)
         )
 
+        sensor_switch_timeout -= 1
+        if sensor_switch_timeout < 0 and len(sensor_order) > 0:
+            sensor_switch_timeout = 15
+            current_sensor = (current_sensor + 1) % len(sensor_order)
+
+        if current_sensor != -1:
+            canvas.set_text(
+                current_focused_sensor_pos, font2, sensor_order[current_sensor], Colour(255, 255, 255)
+            )
+
+            canvas.set_text(
+                focused_sensor_info_pos, font2, sensors[sensor_order[current_sensor]], Colour(128, 128, 128)
+            )
+
         st = canvas.update_changes(clear_last=True)
 
         if print_canvas:
@@ -109,6 +153,10 @@ try:
         last_print_time = time.time()
 
         rpi_ipc.send_prot_msg(pipe, st)
+
+        # peek the pipe for any new information from sensors
+
+
 
 except KeyboardInterrupt:
     if print_canvas:
