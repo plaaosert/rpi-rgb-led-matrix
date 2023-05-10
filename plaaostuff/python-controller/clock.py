@@ -63,9 +63,6 @@ focused_sensor_info_pos = Vector2(1, 42)
 sensors = {}
 sensor_order = []
 
-sensor_order.append("testguy")
-sensors["testguy"] = "12345"
-
 current_sensor = -1
 sensor_switch_timeout = 0
 
@@ -76,8 +73,8 @@ record_timeout = 0
 
 last_recorded_time = time.time()
 
-# If on Linux, set up thread here for reading from the info pipe
-if "linux" in platform.platform().lower():
+# If using pipe, set up thread here for reading from the info pipe as well
+if pipe:
     def read_pipe():
         global sensors
         with open("/home/pi/sensor_inp_pipe", "r") as f:
@@ -140,7 +137,7 @@ try:
 
         sensor_switch_timeout -= 1
         if sensor_switch_timeout < 0 and len(sensor_order) > 0:
-            sensor_switch_timeout = 5
+            sensor_switch_timeout = 3
             current_sensor = (current_sensor + 1) % len(sensor_order)
 
         if current_sensor != -1:
@@ -153,6 +150,18 @@ try:
                 canvas.set_text(
                     focused_sensor_info_pos, font2, sensors[sensor_order[current_sensor]], Colour(128, 128, 128)
                 )
+
+        canvas.set_text(
+            Vector2(1, 56), font2, "<", Colour(255, 255, 255)
+        )
+
+        canvas.set_text(
+            Vector2(58, 56), font2, ">", Colour(255, 255, 255)
+        )
+
+        canvas.set_text(
+            Vector2(15, 56), font2, "{:3}/{:<3}".format(current_sensor + 1, len(sensor_order)), Colour(255, 255, 255)
+        )
 
         st = canvas.update_changes(clear_last=True)
 
