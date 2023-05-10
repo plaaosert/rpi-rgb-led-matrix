@@ -93,7 +93,7 @@ if "linux" in platform.platform().lower():
 
                         sensors[origin] = payload
 
-    threading.Thread(target=read_pipe).start()
+    threading.Thread(target=read_pipe, daemon=True).start()
 
 try:
     while True:
