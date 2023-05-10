@@ -72,8 +72,14 @@ sensor_name_lookups = {
     "temp_humidity_2": "outside"
 }
 
-sensors["temp_humidity_0"] = "25|78"
+sensors["temp_humidity_0"] = "25.24|78.19"
 sensor_order.append("temp_humidity_0")
+
+sensors["temp_humidity_1"] = "-10.24|1.19"
+sensor_order.append("temp_humidity_1")
+
+sensors["temp_humidity_2"] = "99.99|0"
+sensor_order.append("temp_humidity_2")
 
 current_sensor = -1
 sensor_switch_timeout = 0
@@ -155,31 +161,37 @@ try:
         if current_sensor != -1:
             if sensor_order[current_sensor]:
                 canvas.set_text(
-                    current_focused_sensor_pos, font2, "{:^12}".format(sensor_name_lookups[sensor_order[current_sensor]]), Colour(255, 255, 255)
+                    current_focused_sensor_pos, font2, "{:^12}".format(sensor_name_lookups[sensor_order[current_sensor]]), Colour(192, 192, 192)
                 )
 
             data = sensors[sensor_order[current_sensor]]
             if data:
                 temp, _, humid = data.partition("|")
 
+                temp_index = 0
+                temperature_col = temperature_cols[0]
+                while float(temp) < temperature_col[1]:
+                    temp_index += 1
+                    temperature_col = temperature_cols[temp_index]
+
                 canvas.set_text(
-                    focused_sensor_info_pos + Vector2(10, 0), font2, temp + "C", Colour(128, 128, 128)
+                    focused_sensor_info_pos, font2, "{:5}{}".format(round(float(temp), 1), "C"), temperature_col[0]
                 )
 
                 canvas.set_text(
-                    focused_sensor_info_pos + Vector2(36, 0), font2, humid + "%", Colour(128, 128, 128)
+                    focused_sensor_info_pos + Vector2(34, 0), font2, "{:4}{}".format(round(float(humid), 1), "%"), Colour(128, 128, 128).lerp(Colour(64, 64, 255), float(humid) / 100)
                 )
 
         canvas.set_text(
-            Vector2(1, 56), font2, "<", Colour(255, 255, 255)
+            Vector2(1, 56), font2, "<", Colour(192, 192, 192) if current_sensor > 0 else Colour(32, 32, 32)
         )
 
         canvas.set_text(
-            Vector2(58, 56), font2, ">", Colour(255, 255, 255)
+            Vector2(58, 56), font2, ">", Colour(192, 192, 192) if current_sensor + 1 < len(sensor_order) else Colour(32, 32, 32)
         )
 
         canvas.set_text(
-            Vector2(15, 56), font2, "{:3}/{:<3}".format(current_sensor + 1, len(sensor_order)), Colour(255, 255, 255)
+            Vector2(15, 56), font2, "{:3}/{:<3}".format(current_sensor + 1, len(sensor_order)), Colour(192, 192, 192)
         )
 
         st = canvas.update_changes(clear_last=True)
