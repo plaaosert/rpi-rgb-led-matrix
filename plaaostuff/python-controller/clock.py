@@ -97,7 +97,7 @@ if "linux" in platform.platform().lower():
 try:
     while True:
         while time.time() < math.floor(last_recorded_time + 1):
-            time.sleep(min(0.25, math.floor(last_recorded_time + 1) - time.time()))
+            time.sleep(max(0.0, min(0.25, math.floor(last_recorded_time + 1) - time.time())))
 
         last_recorded_time = round(time.time())
 
