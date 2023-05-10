@@ -170,7 +170,7 @@ try:
                 )
 
                 canvas.set_text(
-                    focused_sensor_info_pos + Vector2(34, 0), font2, "{:4}{}".format(round(float(humid), 1) if humid < 100 else 100, "%"), Colour(128, 128, 128).lerp(Colour(64, 64, 255), float(humid) / 100)
+                    focused_sensor_info_pos + Vector2(34, 0), font2, "{:4}{}".format(round(float(humid), 1) if float(humid) < 100 else 100, "%"), Colour(128, 128, 128).lerp(Colour(64, 64, 255), float(humid) / 100)
                 )
 
         canvas.set_text(
