@@ -62,6 +62,10 @@ focused_sensor_info_pos = Vector2(1, 42)
 
 sensors = {}
 sensor_order = []
+
+sensor_order.append("testguy")
+sensors["testguy"] = "12345"
+
 current_sensor = -1
 sensor_switch_timeout = 0
 
