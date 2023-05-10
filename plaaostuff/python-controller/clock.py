@@ -68,18 +68,9 @@ sensors = {}
 sensor_order = []
 sensor_name_lookups = {
     "temp_humidity_0": "broom closet",
-    "temp_humidity_1": "living room",
+    "temp_humidity_1": "bedroom",
     "temp_humidity_2": "outside"
 }
-
-sensors["temp_humidity_0"] = "25.24|78.19"
-sensor_order.append("temp_humidity_0")
-
-sensors["temp_humidity_1"] = "-10.24|1.19"
-sensor_order.append("temp_humidity_1")
-
-sensors["temp_humidity_2"] = "99.99|0"
-sensor_order.append("temp_humidity_2")
 
 current_sensor = -1
 sensor_switch_timeout = 0
