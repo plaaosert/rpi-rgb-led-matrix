@@ -81,7 +81,7 @@ if "linux" in platform.platform().lower():
                 data = f.read()
                 if len(data) == 0:
                     # closed pipe
-                    return
+                    # return
 
                 entries = data.split("\n")
                 for entry in entries:
@@ -139,7 +139,6 @@ try:
             current_sensor = (current_sensor + 1) % len(sensor_order)
 
         if current_sensor != -1:
-            print(sensors, sensor_order)
             if sensor_order[current_sensor]:
                 canvas.set_text(
                     current_focused_sensor_pos, font2, sensor_order[current_sensor], Colour(255, 255, 255)
