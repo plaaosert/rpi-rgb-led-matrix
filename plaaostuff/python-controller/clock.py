@@ -20,6 +20,14 @@ import rpi_ipc
 last_print_time = time.time()
 
 
+def is_int(val):
+    try:
+        int(val)
+        return True
+    except:
+        return False
+
+
 # set up constants
 print_canvas = False
 if "linux" in platform.platform().lower():
@@ -98,10 +106,13 @@ if pipe:
                 for entry in entries:
                     if entry:
                         origin, _, payload = entry.partition(":")
-                        if origin not in sensors:
-                            sensor_order.append(origin)
+                        if origin in sensor_name_lookups:
+                            part1, _, part2 = entry.partition("|")
+                            if is_int(part1) and is_int(part2):
+                                if origin not in sensors:
+                                    sensor_order.append(origin)
 
-                        sensors[origin] = payload
+                                sensors[origin] = payload
 
     threading.Thread(target=read_pipe, daemon=True).start()
 
