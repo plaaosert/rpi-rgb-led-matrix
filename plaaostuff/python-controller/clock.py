@@ -80,6 +80,14 @@ sensor_name_lookups = {
     "temp_humidity_2": "outside"
 }
 
+testing_sensors = False
+if "--test-sensors" in sys.argv:
+    testing_sensors = True
+    for s in sensor_name_lookups.keys():
+        sensors[s] = "0|0"
+        sensor_order.append(s)
+
+
 current_sensor = -1
 sensor_switch_timeout = 0
 
@@ -127,33 +135,37 @@ try:
         # TODO put this in a different thread since it'll hang the clock
         if time.time() > record_timeout + (30 * 60) and make_webrequests:
             record_timeout = time.time()
-            response = requests.get("https://wttr.in/Southampton?format=\"%t|%f\"")
+            try:
+                response = requests.get("https://wttr.in/Southampton?format=\"%t|%f\"")
 
-            recorded_temperature, recorded_temperature_feel = (int(t) for t in response.text[1:-1].replace("°C", "").split("|"))
+                recorded_temperature, recorded_temperature_feel = (int(t) for t in response.text[1:-1].replace("°C", "").split("|"))
+            except:
+                pass
 
         cur_time = datetime.datetime.now()
         canvas.set_text(clock_pos, font, cur_time.strftime('%X'), clock_main_col)
         canvas.set_text(day_pos, font2, cur_time.strftime('%A'), clock_sub_col)
         canvas.set_text(date_pos, font2, cur_time.strftime('%x'), clock_sub_col)
 
-        temp_index = 0
-        temperature_col = temperature_cols[0]
-        while recorded_temperature < temperature_col[1]:
-            temp_index += 1
-            temperature_col = temperature_cols[temp_index]
+        if recorded_temperature or recorded_temperature_feel:
+            temp_index = 0
+            temperature_col = temperature_cols[0]
+            while recorded_temperature < temperature_col[1]:
+                temp_index += 1
+                temperature_col = temperature_cols[temp_index]
 
-        canvas.set_text(temperature_pos, font2, "{:-3}C".format(int(round(recorded_temperature))), temperature_col[0])
+            canvas.set_text(temperature_pos, font2, "{:-3}C".format(int(round(recorded_temperature))), temperature_col[0])
 
-        temp_index = 0
-        temperature_col = temperature_cols[0]
-        while recorded_temperature_feel < temperature_col[1]:
-            temp_index += 1
-            temperature_col = temperature_cols[temp_index]
+            temp_index = 0
+            temperature_col = temperature_cols[0]
+            while recorded_temperature_feel < temperature_col[1]:
+                temp_index += 1
+                temperature_col = temperature_cols[temp_index]
 
-        canvas.set_text(
-            temperature_pos, font2, "{:-3}C".format(int(round(recorded_temperature))),
-            temperature_col[0].fade_black(0.5)
-        )
+            canvas.set_text(
+                temperature_feel_pos, font2, "{:-3}C".format(int(round(recorded_temperature_feel))),
+                temperature_col[0].fade_black(0.5)
+            )
 
         sensor_switch_timeout -= 1
         if sensor_switch_timeout < 0 and len(sensor_order) > 0:
@@ -206,8 +218,9 @@ try:
 
         rpi_ipc.send_prot_msg(pipe, st)
 
-        # peek the pipe for any new information from sensors
-
+        if testing_sensors:
+            for s in sensor_order:
+                sensors[s] = "{}|{}".format(random.randint(-2000, 4000) / 100.0, random.randint(0, 10000) / 100.0)
 
 
 except KeyboardInterrupt:
