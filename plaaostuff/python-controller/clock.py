@@ -115,8 +115,7 @@ if pipe:
                     if entry:
                         origin, _, payload = entry.partition(":")
                         if origin in sensor_name_lookups:
-                            part1, _, part2 = entry.partition("|")
-                            print(entry, is_float(part1), is_float(part2))
+                            part1, _, part2 = payload.partition("|")
                             if is_float(part1) and is_float(part2):
                                 if origin not in sensors:
                                     sensor_order.append(origin)
