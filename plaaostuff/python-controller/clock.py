@@ -20,9 +20,9 @@ import rpi_ipc
 last_print_time = time.time()
 
 
-def is_int(val):
+def is_float(val):
     try:
-        int(val)
+        float(val)
         return True
     except:
         return False
@@ -108,7 +108,7 @@ if pipe:
                         origin, _, payload = entry.partition(":")
                         if origin in sensor_name_lookups:
                             part1, _, part2 = entry.partition("|")
-                            if is_int(part1) and is_int(part2):
+                            if is_float(part1) and is_float(part2):
                                 if origin not in sensors:
                                     sensor_order.append(origin)
 
